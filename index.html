@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Głosy Kraśniczej Woli</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -133,7 +133,7 @@ aside { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); displ
       <div class="list">
         <h3>Wszystkie ptaki</h3>
         <div class="chips" id="chips"></div>
-        <p class="hint">Złota kropka: nagranie dostępne. Pusta: nagranie do uzupełnienia.</p>
+        <p class="hint">Kliknij nazwę, żeby odtworzyć głos.</p>
       </div>
     </aside>
   </div>
@@ -144,20 +144,20 @@ const MAX = 10; // sekundy
 
 // Strefy w pikselach plakatu 1055 × 1491: sylwetka (poly), podpis na scenie (label), wiersz legendy (legend)
 const BIRDS = [
-  { id: "remiz", name: "Remiz", latin: "Remiz pendulinus", note: "Cienkie, przeciągłe „siii”, słyszane z nadwodnych wierzb i trzcin.",
+  { id: "remiz", name: "Remiz", latin: "Remiz pendulinus", sound: "sounds/remiz.mp3", credit: `<a href="https://xeno-canto.org/1182512" target="_blank" rel="noopener">xeno-canto XC1182512</a>, autor: Bas (CC BY-NC-SA 4.0)`, note: "Cienkie, przeciągłe „siii”, słyszane z nadwodnych wierzb i trzcin.",
     poly: "45,515 95,492 150,500 182,540 178,595 140,622 80,622 40,590 30,548", label: [63,604,80,31], legend: [55,1287,170,31] },
-  { id: "kowalik", name: "Kowalik", latin: "Sitta europaea", note: "Głośne, czyste gwizdy „tju-tju-tju”, często z pnia drzewa.",
+  { id: "kowalik", name: "Kowalik", latin: "Sitta europaea", sound: "sounds/kowalik.mp3", credit: `<a href="https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=audio&search=Sitta+europaea" target="_blank" rel="noopener">Wikimedia Commons</a>`, note: "Głośne, czyste gwizdy „tju-tju-tju”, często z pnia drzewa.",
     poly: "893,378 930,340 960,280 1000,225 1025,208 1033,240 1018,300 1012,350 982,372 935,378", label: [906,393,92,37], legend: [55,1320,170,30] },
-  { id: "zuraw", name: "Żuraw", latin: "Grus grus", note: "Donośne, trąbiące „krru”, słyszalne z kilku kilometrów.",
+  { id: "zuraw", name: "Żuraw", latin: "Grus grus", sound: "sounds/zuraw.mp3", credit: `<a href="https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=audio&search=Grus+grus" target="_blank" rel="noopener">Wikimedia Commons</a>`, note: "Donośne, trąbiące „krru”, słyszalne z kilku kilometrów.",
     poly: "320,465 355,466 390,490 345,497 335,550 315,590 265,625 262,722 230,722 225,642 170,702 148,690 158,600 220,560 300,545 320,500", label: [337,575,84,31], legend: [55,1350,170,30],
     poly2: "330,682 350,630 420,612 470,620 500,660 520,710 542,725 532,768 508,738 480,692 445,692 447,742 420,742 400,702 340,702" },
   { id: "bak", name: "Bąk", latin: "Botaurus stellaris", sound: "sounds/bak.mp3", xc: "XC100296", note: "Samiec wydaje niskie, buczące „huu”, które niesie się kilometrami nad trzcinowiskiem.",
     poly: "28,852 60,790 120,750 190,730 268,730 232,746 202,782 187,832 150,862 80,882 33,882", label: [156,834,58,28], legend: [55,1382,170,36] },
-  { id: "labedz", name: "Łabędź niemy", latin: "Cygnus olor", note: "Mimo nazwy syczy i pochrząkuje, a w locie słychać rytmiczny szum skrzydeł.",
+  { id: "labedz", name: "Łabędź niemy", latin: "Cygnus olor", sound: "sounds/labedz.mp3", credit: `<a href="https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=audio&search=Cygnus+olor" target="_blank" rel="noopener">Wikimedia Commons</a>`, note: "Mimo nazwy syczy i pochrząkuje, a w locie słychać rytmiczny szum skrzydeł.",
     poly: "273,885 320,874 450,870 468,812 500,800 526,815 542,862 520,852 502,842 502,900 527,936 470,942 320,937 284,912", label: [528,906,126,31], legend: [250,1288,195,30] },
-  { id: "kapturka", name: "Kapturka", latin: "Sylvia atricapilla", note: "Melodyjny, fletowy śpiew zakończony głośną, czystą zwrotką.",
+  { id: "kapturka", name: "Kapturka", latin: "Sylvia atricapilla", sound: "sounds/kapturka.mp3", credit: `<a href="https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=audio&search=Sylvia+atricapilla" target="_blank" rel="noopener">Wikimedia Commons</a>`, note: "Melodyjny, fletowy śpiew zakończony głośną, czystą zwrotką.",
     poly: "36,422 80,370 130,330 175,302 205,297 230,315 206,332 196,357 160,387 110,397 60,422", label: [209,353,96,30], legend: [250,1320,195,30] },
-  { id: "zieba", name: "Zięba", latin: "Fringilla coelebs", note: "Opadająca zwrotka zakończona energicznym „trzepnięciem”.",
+  { id: "zieba", name: "Zięba", latin: "Fringilla coelebs", sound: "sounds/zieba.mp3", credit: `<a href="https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=audio&search=Fringilla+coelebs" target="_blank" rel="noopener">Wikimedia Commons</a>`, note: "Opadająca zwrotka zakończona energicznym „trzepnięciem”.",
     poly: "893,812 930,790 952,800 982,830 1037,916 1015,912 970,887 920,872 898,846", label: [836,848,68,29], legend: [250,1352,195,30] },
   { id: "blotniak", name: "Błotniak stawowy", latin: "Circus aeruginosus", sound: "sounds/blotniak-stawowy.mp3", xc: "XC100619", note: "Odzywa się rzadko. W sezonie lęgowym słychać piskliwe nawoływania nad trzcinami.",
     poly: "428,273 520,300 600,338 632,344 652,360 748,400 748,428 690,417 620,397 570,422 528,422 538,390 468,330", label: [508,434,158,29], legend: [250,1384,195,34] },
@@ -167,18 +167,18 @@ const BIRDS = [
     poly: "493,1220 540,1195 600,1185 605,1160 632,1158 662,1190 646,1200 646,1230 610,1243 520,1242", label: [732,1219,105,26], legend: [470,1320,170,30] },
   { id: "lyska", name: "Łyska", latin: "Fulica atra", sound: "sounds/lyska.mp3", xc: "XC436382", note: "Krótkie, ostre „pik” i „kt”, słyszane z wody także nocą.",
     poly: "163,1240 200,1200 270,1188 290,1164 312,1168 322,1200 312,1236 280,1252 190,1254", label: [317,1211,66,33], legend: [470,1352,170,30] },
-  { id: "ges", name: "Gęś gęgawa", latin: "Anser anser", note: "Głośne gęganie, bardzo podobne do głosu gęsi domowej, która od niej pochodzi.",
+  { id: "ges", name: "Gęś gęgawa", latin: "Anser anser", sound: "sounds/ges.mp3", credit: `<a href="https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=audio&search=Anser+anser" target="_blank" rel="noopener">Wikimedia Commons</a>`, note: "Głośne gęganie, bardzo podobne do głosu gęsi domowej, która od niej pochodzi.",
     poly: "863,1192 890,1168 916,1163 927,1185 922,1210 960,1204 1022,1214 1027,1246 980,1256 900,1256 880,1236", label: [912,1247,110,28], legend: [470,1384,170,34] },
-  { id: "modraszka", name: "Modraszka", latin: "Cyanistes caeruleus", note: "Wysokie, dzwoniące „si-si-sirrr” zakończone trelem.",
+  { id: "modraszka", name: "Modraszka", latin: "Cyanistes caeruleus", sound: "sounds/modraszka.mp3", credit: `<a href="https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=audio&search=Cyanistes+caeruleus" target="_blank" rel="noopener">Wikimedia Commons</a>`, note: "Wysokie, dzwoniące „si-si-sirrr” zakończone trelem.",
     poly: "53,1056 110,1020 160,990 200,974 236,984 247,1000 232,1032 200,1062 150,1067 110,1052", label: [211,1049,101,31], legend: [655,1285,185,26] },
   { id: "rudzik", name: "Rudzik", latin: "Erithacus rubecula", sound: "sounds/rudzik.mp3",
     credit: `<a href="https://freesound.org/s/456440/" target="_blank" rel="noopener">InspectorJ, Freesound</a> (CC BY 4.0)`, note: "Perlisty, melancholijny śpiew, który słychać nawet jesienią i zimą.",
     poly: "343,1162 390,1120 420,1090 450,1074 482,1088 472,1110 467,1146 436,1172 395,1172", label: [473,1125,83,29], legend: [655,1311,185,26] },
   { id: "bocian", name: "Bocian biały", latin: "Ciconia ciconia", sound: "sounds/bocian.mp3", xc: "XC129188", note: "Dorosły bocian prawie nie ma głosu. Porozumiewa się klekotem dzioba.",
     poly: "703,602 745,545 760,518 787,524 787,560 802,590 870,604 928,690 906,702 860,682 842,700 837,782 800,782 805,692 770,652 760,582", label: [811,546,80,30], legend: [655,1338,185,26] },
-  { id: "bogatka", name: "Bogatka", latin: "Parus major", note: "Dwusylabowe „ci-ta ci-ta”, brzmiące jak pompowanie roweru.",
+  { id: "bogatka", name: "Bogatka", latin: "Parus major", sound: "sounds/bogatka.mp3", credit: `<a href="https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=audio&search=Parus+major" target="_blank" rel="noopener">Wikimedia Commons</a>`, note: "Dwusylabowe „ci-ta ci-ta”, brzmiące jak pompowanie roweru.",
     poly: "868,996 900,970 930,964 962,990 1002,1020 1032,1072 1000,1072 950,1062 910,1047 884,1022", label: [947,1076,88,31], legend: [655,1365,185,27] },
-  { id: "raniuszek", name: "Raniuszek", latin: "Aegithalos caudatus", note: "Cienkie „sisisi” i terkoczące „czrr”, gdy stadko przelatuje przez zarośla.",
+  { id: "raniuszek", name: "Raniuszek", latin: "Aegithalos caudatus", sound: "sounds/raniuszek.mp3", credit: `<a href="https://commons.wikimedia.org/w/index.php?title=Special:MediaSearch&type=audio&search=Aegithalos+caudatus" target="_blank" rel="noopener">Wikimedia Commons</a>`, note: "Cienkie „sisisi” i terkoczące „czrr”, gdy stadko przelatuje przez zarośla.",
     poly: "638,1150 720,1130 745,1110 780,1104 802,1120 797,1150 772,1170 735,1170 718,1147", label: [682,1171,98,29], legend: [655,1393,185,28] },
 ];
 
@@ -224,7 +224,7 @@ const chips = document.getElementById("chips");
 for (const b of BIRDS) {
   const c = document.createElement("button");
   c.className = "chip"; c.dataset.id = b.id; c.type = "button";
-  c.innerHTML = `<span class="dot${b.sound ? "" : " off"}"></span>${b.name}`;
+  c.textContent = b.name;
   c.addEventListener("click", () => select(b.id, true));
   chips.appendChild(c);
 }
@@ -299,7 +299,7 @@ function select(id, autoplay) {
     $("playerBox").hidden = false; playBtn.disabled = false;
     $("missing").hidden = true;
     $("credit").hidden = false;
-    $("credit").innerHTML = b.credit ? `Nagranie: ${b.credit}.`
+    $("credit").innerHTML = b.credit ? `Nagranie: ${b.credit}, przycięte do ${MAX} s.`
       : `Nagranie: <a href="https://xeno-canto.org/${b.xc.slice(2)}" target="_blank" rel="noopener">xeno-canto ${b.xc}</a>, przycięte do ${MAX} s.`;
     if (autoplay) play();
   } else {
